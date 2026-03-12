@@ -74,9 +74,20 @@ import { createExam } from "./controllers/admin/exam.controller.js";
 
 const app = express();
 
+// app.use(
+//   cors({
+//     origin: "http://localhost:5173", // 👈 frontend origin
+//     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+//     credentials: true,
+//   })
+// );
+
 app.use(
   cors({
-    origin: "http://localhost:5173", // 👈 frontend origin
+    origin: [
+      "http://localhost:5173",
+      "https://college-erp-final.netlify.app"
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   })
