@@ -37,6 +37,7 @@ import sendNotification from "./routes/admin/notification.routes.js";
 import adminFeeStructureRoutes from "./routes/admin/feeStructure.routes.js";
 import adminFeeRecordRoutes from "./routes/admin/feeRecord.routes.js";
 import examPublishRoutes from "./routes/admin/examPublish.routes.js";
+import adminSubjectRoutes from "./routes/admin/subject.routes.js";
 
 // ===== TEACHER ROUTES =====
 import teacherAuthRoutes from "./routes/teacher/auth.routes.js";
@@ -121,6 +122,7 @@ app.use("/api/admin/notification",sendNotification);
 app.use("/api/admin/fee-structures", adminFeeStructureRoutes);
 app.use("/api/admin/fee-records", adminFeeRecordRoutes);
 app.use("/api/admin/exam-publish", examPublishRoutes);
+app.use("/api/admin/subjects", adminSubjectRoutes);
 
 
 

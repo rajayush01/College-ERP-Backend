@@ -101,7 +101,10 @@ const studentSchema = new mongoose.Schema(
     },
 
     bloodGroup: String,
-    caste: String,
+    caste: {
+      type: String,
+      enum: ['General', 'OBC', 'SC', 'ST', 'EWS', 'NT', 'SBC', 'VJ'],
+    },
 
     dob: {
       type: Date,
