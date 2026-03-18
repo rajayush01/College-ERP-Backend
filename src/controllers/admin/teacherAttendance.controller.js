@@ -50,6 +50,7 @@ export const markTeacherAttendance = async (req, res) => {
               teacher: teacher._id,
               date: new Date(date),
               status,
+              markedAt: new Date(),
               markedBy: req.user.id,
             },
           },
@@ -117,15 +118,22 @@ export const getTeacherAttendanceReport = async (req, res) => {
     /* 3️⃣ Map attendance by teacherId */
     const attendanceMap = {};
     attendance.forEach((a) => {
-      attendanceMap[a.teacher._id.toString()] = a.status;
+      attendanceMap[a.teacher._id.toString()] = {
+        status: a.status,
+        markedAt: a.markedAt || null,
+      };
     });
 
     /* 4️⃣ Merge teachers + attendance */
-    const report = teachers.map((t) => ({
-      teacherId: t.teacherId,
-      name: t.name,
-      status: attendanceMap[t._id.toString()] || "ABSENT",
-    }));
+    const report = teachers.map((t) => {
+      const entry = attendanceMap[t._id.toString()];
+      return {
+        teacherId: t.teacherId,
+        name: t.name,
+        status: entry?.status || "ABSENT",
+        markedAt: entry?.markedAt || null,
+      };
+    });
 
     console.log(`✅ Attendance records returned: ${report.length}`);
 
@@ -139,5 +147,27 @@ export const getTeacherAttendanceReport = async (req, res) => {
     return res.status(500).json({
       message: "Failed to fetch teacher attendance report",
     });
+  }
+};
+
+
+/**
+ * Teacher: Get own attendance records
+ */
+export const getMyAttendance = async (req, res) => {
+  try {
+    const teacher = await Teacher.findOne({ _id: req.user.id }).select("_id");
+    if (!teacher) {
+      return res.status(404).json({ message: "Teacher not found" });
+    }
+
+    const records = await TeacherAttendance.find({ teacher: teacher._id })
+      .sort({ date: -1 })
+      .lean();
+
+    return res.json({ records });
+  } catch (error) {
+    console.error("🔥 [getMyAttendance] Error:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };

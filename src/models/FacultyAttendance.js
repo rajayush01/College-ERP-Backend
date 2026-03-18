@@ -19,6 +19,11 @@ const teacherAttendanceSchema = new mongoose.Schema(
       required: true,
     },
 
+    markedAt: {
+      type: Date,
+      default: Date.now,
+    },
+
     markedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Admin", // or "User" if admin is in User collection

@@ -52,6 +52,7 @@ import teacherAssignmentRoutes from "./routes/teacher/assignment.routes.js";
 import teacherAssignmentGradingRoutes from "./routes/teacher/assignmentGrading.routes.js";
 import teacherTimetable from "./routes/teacher/timetable.routes.js";
 import teacherMyTimetableRoutes from "./routes/teacher/myTimetable.routes.js";
+import teacherMyAttendanceRoutes from "./routes/teacher/myAttendance.routes.js";
 
 // ===== STUDENT ROUTES =====
 import studentAuthRoutes from "./routes/student/auth.routes.js";
@@ -140,6 +141,7 @@ app.use("/api/teacher/assignments", teacherAssignmentRoutes);
 app.use("/api/teacher/assignment-grading", teacherAssignmentGradingRoutes);
 app.use("/api/teacher/timetable",teacherTimetable);
 app.use("/api/teacher/my-timetable", teacherMyTimetableRoutes);
+app.use("/api/teacher/my-attendance", teacherMyAttendanceRoutes);
 
 // ===== STUDENT =====
 app.use("/api/student/auth", studentAuthRoutes);
